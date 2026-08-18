@@ -1,0 +1,56 @@
+# =========================
+# Frontend - React / Vite
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+
+# =========================
+# Backend - Python / FastAPI
+# =========================
+
+backend/myenv/
+backend/venv/
+backend/.venv/
+
+backend/__pycache__/
+backend/**/__pycache__/
+
+backend/.env
+backend/.env.*
+
+
+# =========================
+# Python cache
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# =========================
+# Jupyter Notebook
+# =========================
+
+.ipynb_checkpoints/
+
+
+# =========================
+# VS Code
+# =========================
+
+.vscode/
+
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
