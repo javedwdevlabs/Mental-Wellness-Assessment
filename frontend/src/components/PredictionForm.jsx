@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 function PredictionForm() {
     const navigate = useNavigate();
+    const [error, setError] = useState("");
     const [formData, setFormData] = useState({
         age: "",
         gender: "",
@@ -36,13 +37,17 @@ function PredictionForm() {
         }))
     }
 
-// submit data 
+
+
+// submit data
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  setError("");
+
   try {
     const response = await fetch(
-      "http://127.0.0.1:8000/predict",
+      "https://mental-wellness-assessment.onrender.com/predict",
       {
         method: "POST",
         headers: {
@@ -52,19 +57,29 @@ const handleSubmit = async (e) => {
       }
     );
 
+    if (!response.ok) {
+      setError(
+        "We couldn't connect to our server right now. Please try again in a moment."
+      );
+      return;
+    }
+
     const result = await response.json();
 
-    // console.log("API Response:", result);
     navigate("/prediction", {
-  state: {
-    result,
-  },
-});
+      state: {
+        result,
+      },
+    });
 
   } catch (error) {
-    console.error("API Error:", error);
+    setError(
+      "We couldn't connect to our server right now. Please try again in a moment."
+    );
   }
 };
+
+
   return (
     <section className="max-w-6xl mx-auto px-6 pb-16">
 
@@ -483,6 +498,12 @@ const handleSubmit = async (e) => {
             </p>
 
         
+            {error && (
+              <div className="w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                ⚠️ {error}
+              </div>
+            )}
+
             <button
               type="submit"
               className="w-full sm:w-auto px-8 h-12 rounded-xl bg-green-950 hover:bg-green-900 text-white text-sm font-semibold transition"
