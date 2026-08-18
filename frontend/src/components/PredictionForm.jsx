@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 function PredictionForm() {
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         age: "",
         gender: "",
@@ -44,7 +45,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   setError("");
-
+setLoading(true);
   try {
     const response = await fetch(
       "https://mental-wellness-assessment.onrender.com/predict",
@@ -76,7 +77,9 @@ const handleSubmit = async (e) => {
     setError(
       "We couldn't connect to our server right now. Please try again in a moment."
     );
-  }
+  }finally {
+  setLoading(false);
+}
 };
 
 
@@ -507,8 +510,9 @@ const handleSubmit = async (e) => {
             <button
               type="submit"
               className="w-full sm:w-auto px-8 h-12 rounded-xl bg-green-950 hover:bg-green-900 text-white text-sm font-semibold transition"
+              disabled={loading}
             >
-              Analyze My Wellness →
+              {loading ? "Analyzing..." : "Analyze My Wellness →"}
             </button>
          
             
