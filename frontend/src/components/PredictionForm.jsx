@@ -68,13 +68,10 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    const response = await fetch(
-      "https://mental-wellness-assessment.onrender.com/predict",
+    const response = await fetch("https://mental-wellness-assessment.onrender.com/predict",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(formData),
       }
     );
