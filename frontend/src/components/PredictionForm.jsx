@@ -59,10 +59,14 @@ setLoading(true);
     );
 
     if (!response.ok) {
-      setError(
-        "We couldn't connect to our server right now. Please try again in a moment."
-      );
-      return;
+      // setError(
+      //   "We couldn't connect to our server right now. Please try again in a moment."
+      // );
+
+       const errorData = await response.json();
+       console.error("Backend Error:", errorData);
+
+  return;
     }
 
     const result = await response.json();
