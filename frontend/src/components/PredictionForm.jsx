@@ -45,7 +45,28 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   setError("");
-setLoading(true);
+  setLoading(true);
+
+  // Check required fields before sending request
+  if (
+    !formData.age ||
+    !formData.gender ||
+    !formData.country ||
+    !formData.academic_level ||
+    !formData.most_used_platform ||
+    !formData.purpose_of_use ||
+    !formData.avg_daily_usage_hours ||
+    !formData.daily_unlocks ||
+    !formData.study_hours ||
+    !formData.physical_activity_hours ||
+    !formData.sleep_hours_per_night ||
+    !formData.stress_level
+  ) {
+    setError("Please complete all fields before continuing.");
+    setLoading(false);
+    return;
+  }
+
   try {
     const response = await fetch(
       "https://mental-wellness-assessment.onrender.com/predict",
@@ -58,15 +79,15 @@ setLoading(true);
       }
     );
 
+    // Backend/Pydantic validation error
     if (!response.ok) {
-      // setError(
-      //   "We couldn't connect to our server right now. Please try again in a moment."
-      // );
+      const errorData = await response.json();
 
-       const errorData = await response.json();
-       console.error("Backend Error:", errorData);
+      console.error("Backend Error:", errorData);
 
-  return;
+      setError("Please check your information and try again.");
+
+      return;
     }
 
     const result = await response.json();
@@ -78,12 +99,15 @@ setLoading(true);
     });
 
   } catch (error) {
+    console.error("Server Error:", error);
+
     setError(
       "We couldn't connect to our server right now. Please try again in a moment."
     );
-  }finally {
-  setLoading(false);
-}
+
+  } finally {
+    setLoading(false);
+  }
 };
 
 
