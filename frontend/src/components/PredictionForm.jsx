@@ -540,7 +540,15 @@ const handleSubmit = async (e) => {
               className="w-full sm:w-auto px-8 h-12 rounded-xl bg-green-950 hover:bg-green-900 text-white text-sm font-semibold transition"
               disabled={loading}
             >
-              {loading ? "Analyzing..." : "Analyze My Wellness →"}
+              {loading ? (
+  <span className="flex items-center justify-center gap-2">
+    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+    Analyzing...
+  </span>
+) : (
+  "Analyze My Wellness →"
+)}
+
             </button>
          
             
