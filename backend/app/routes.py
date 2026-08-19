@@ -19,14 +19,17 @@ def greet():
 @router.post("/predict", response_model=PredictionResponse)
 def predict(data: UserData):
 
-    start_time = time.time()
+    start_time = time.perf_counter()
 
     try:
         score = predict_mental_health(data)
 
         category, summary = get_mental_health_assessment(score)
 
-        print("Prediction time:", time.time() - start_time)
+         
+        print(
+            f"Prediction time: {time.perf_counter() - start_time:.4f} seconds"
+        )
 
         return PredictionResponse(
             predicted_mental_health_score=score,
