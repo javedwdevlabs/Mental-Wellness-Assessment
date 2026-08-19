@@ -1,5 +1,5 @@
 from fastapi import APIRouter,HTTPException
-import time
+
 
 from app.schemas import UserData, PredictionResponse
 from app.services import (
@@ -19,7 +19,6 @@ def greet():
 @router.post("/predict", response_model=PredictionResponse)
 def predict(data: UserData):
 
-    start_time = time.perf_counter()
 
     try:
         score = predict_mental_health(data)
@@ -27,9 +26,7 @@ def predict(data: UserData):
         category, summary = get_mental_health_assessment(score)
 
          
-        print(
-            f"Prediction time: {time.perf_counter() - start_time:.4f} seconds"
-        )
+  
 
         return PredictionResponse(
             predicted_mental_health_score=score,
